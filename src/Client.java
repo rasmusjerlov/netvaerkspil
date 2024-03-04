@@ -10,7 +10,7 @@ public class Client {
 	public static void main(String[] args) throws Exception, IOException {
 
 		// connection stuff
-		Socket navneSocket = new Socket("10.10.138.146", 6789);
+		Socket navneSocket = new Socket("localhost", 9999);
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Skriv et navn");
@@ -26,7 +26,7 @@ public class Client {
 		navneSocket.close();
 		System.out.println("Navneserver er termineret - forbinder til: " + receivedIP);
 
-		Socket clientSocket = new Socket(receivedIP, 6789);
+		Socket clientSocket = new Socket(receivedIP, 9999);
 		BufferedReader messageFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		// ----

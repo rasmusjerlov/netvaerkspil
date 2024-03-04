@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +65,12 @@ public class GUI extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			Socket serverSocket = new Socket("localhost", 9999);
+			DataOutputStream outToServer = new DataOutputStream(serverSocket.getOutputStream());
+			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+
+			System.out.println(serverSocket.getInetAddress());
+
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
 			grid.setVgap(10);

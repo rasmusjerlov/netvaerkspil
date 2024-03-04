@@ -8,7 +8,7 @@ public class Server {
     public static void main(String[] args) throws Exception {
 
         // connection stuff
-        ServerSocket serverSocket = new ServerSocket(6789);
+        ServerSocket serverSocket = new ServerSocket(9999);
         System.out.println("Serveren venter på klient");
         Socket connectionSocket = serverSocket.accept();
         BufferedReader messageFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
