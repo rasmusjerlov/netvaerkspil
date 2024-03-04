@@ -16,9 +16,12 @@ public class Server {
         DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
         System.out.println("Klient forbundet til Server");
         // ----
-
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
-//    }
+        String clientMessage;
+        while ((clientMessage = messageFromClient.readLine()) != null) {
+            System.out.println(clientMessage);
+        }
+
     }
 }
