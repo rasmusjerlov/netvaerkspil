@@ -1,5 +1,3 @@
-package game2024;
-
 import javafx.application.Application;
 
 public class App {

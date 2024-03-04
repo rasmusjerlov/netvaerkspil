@@ -1,5 +1,3 @@
-package game2024;
-
 import java.util.ArrayList;
 import java.util.List;
 
