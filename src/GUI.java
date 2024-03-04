@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -63,9 +64,9 @@ public class GUI extends Application {
 	// -------------------------------------------
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws IOException {
 		try {
-			Socket serverSocket = new Socket("localhost", 9999);
+			Socket serverSocket = new Socket("10.10.138.168", 9999);
 			DataOutputStream outToServer = new DataOutputStream(serverSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 
@@ -123,10 +124,38 @@ public class GUI extends Application {
 
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 				switch (event.getCode()) {
-				case UP:    playerMoved(0,-1,"up");    break;
-				case DOWN:  playerMoved(0,+1,"down");  break;
-				case LEFT:  playerMoved(-1,0,"left");  break;
-				case RIGHT: playerMoved(+1,0,"right"); break;
+				case UP:    playerMoved(0,-1,"up");
+                    try {
+                        outToServer.writeBytes("UP");
+						inFromServer.readLine();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+				case DOWN:  playerMoved(0,+1,"down");
+					try {
+						outToServer.writeBytes("DOWN");
+						inFromServer.readLine();
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+					break;
+				case LEFT:  playerMoved(-1,0,"left");
+					try {
+						outToServer.writeBytes("LEFT");
+						inFromServer.readLine();
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+					break;
+				case RIGHT: playerMoved(+1,0,"right");
+					try {
+						outToServer.writeBytes("RIGHT");
+						inFromServer.readLine();
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+					break;
 				default: break;
 				}
 			});
