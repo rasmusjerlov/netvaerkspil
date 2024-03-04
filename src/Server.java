@@ -9,13 +9,13 @@ public class Server {
 
 
         // connection stuff
-        ServerSocket serverSocket = new ServerSocket(9999);
-        System.out.println("Serveren venter på klient");
-
-        while (true) {
-            Socket connectionSocket = serverSocket.accept();
-            new ClientHandler(connectionSocket).start();
-        }
+//        ServerSocket serverSocket = new ServerSocket(9999);
+//        System.out.println("Serveren venter på klient");
+//
+//        while (true) {
+//            Socket connectionSocket = serverSocket.accept();
+//            new ClientHandler(connectionSocket).start();
+//        }
 
 //        // connection stuff
 //        ServerSocket serverSocket = new ServerSocket(9999);
