@@ -9,24 +9,7 @@ public class Client {
 
 	public static void main(String[] args) throws Exception, IOException {
 
-		// connection stuff
-		Socket navneSocket = new Socket("localhost", 9999);
-
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Skriv et navn");
-		String name = reader.readLine();
-
-		DataOutputStream outToNavneServer = new DataOutputStream(navneSocket.getOutputStream());
-		BufferedReader messageFromNameServer = new BufferedReader(new InputStreamReader(navneSocket.getInputStream()));
-
-		outToNavneServer.writeBytes(name + "\n");
-
-		String receivedIP = messageFromNameServer.readLine();
-
-		navneSocket.close();
-		System.out.println("Navneserver er termineret - forbinder til: " + receivedIP);
-
-		Socket clientSocket = new Socket(receivedIP, 9999);
+		Socket clientSocket = new Socket("10.10.138.1682", 9999);
 		BufferedReader messageFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		// ----
