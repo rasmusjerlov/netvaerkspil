@@ -55,6 +55,8 @@ public class GUI extends Application {
 			"wwwwwwwwwwwwwwwwwwww"
 	};
 
+	private int clientId;
+
 	
 	// -------------------------------------------
 	// | Maze: (0,0)              | Score: (1,0) |
@@ -70,7 +72,7 @@ public class GUI extends Application {
 			Socket serverSocket = new Socket("localhost", 9999);
 			DataOutputStream outToServer = new DataOutputStream(serverSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
-
+			this.clientId = Integer.parseInt(inFromServer.readLine());
 
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
@@ -158,7 +160,7 @@ public class GUI extends Application {
 
             // Setting up standard players
 			
-			me = new Player("Rasmus",9,4,"up");
+			Player Rasmus = new Player("Rasmus",9,4,"up");
 			players.add(me);
 			fields[9][4].setGraphic(new ImageView(hero_up));
 
@@ -169,6 +171,8 @@ public class GUI extends Application {
 			Player Anders = new Player("Anders",3,4,"up");
 			players.add(Anders);
 			fields[14][15].setGraphic(new ImageView(hero_up));
+
+			me = players.get(clientId);
 
 			scoreList.setText(getScoreList());
 		} catch(Exception e) {
@@ -182,7 +186,7 @@ public class GUI extends Application {
 
 		if (board[y + delta_y].charAt(x + delta_x) == 'w') {
 			me.addPoints(-1);
-		} 
+		}
 		else {
 			Player p = getPlayerAt(x + delta_x, y + delta_y);
 			if (p != null) {
@@ -190,7 +194,7 @@ public class GUI extends Application {
               p.addPoints(-10);
 			} else {
 				me.addPoints(1);
-			
+
 				fields[x][y].setGraphic(new ImageView(image_floor));
 				x += delta_x;
 				y += delta_y;
@@ -214,6 +218,7 @@ public class GUI extends Application {
 		}
 		scoreList.setText(getScoreList());
 	}
+
 
 	public String getScoreList() {
 		StringBuffer b = new StringBuffer(100);

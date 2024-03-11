@@ -6,21 +6,26 @@ import java.net.Socket;
 
 public class ServerThread extends Thread{
 	Socket connSocket;
+	private int clientID;
 	
-	public ServerThread(Socket connSocket) {
+	public ServerThread(Socket connSocket, int clientID) {
 		this.connSocket = connSocket;
+		this.clientID = clientID;
+
 	}
 	public void run() {
 		try {
+
 			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 			DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
+			String message = String.valueOf(clientID);
+			outToClient.writeBytes(message);
 			
 			// Do the work and the communication with the client here	
 			// The following two lines are only an example
-			String message;
-			while ((message = inFromClient.readLine()) != null) {
+			//while ((message = inFromClient.readLine()) != null) {
 
-			}
+			//}
 		
 		} catch (IOException e) {
 			e.printStackTrace();
