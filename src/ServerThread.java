@@ -18,7 +18,7 @@ public class ServerThread extends Thread{
 
 			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 			DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
-			String message = String.valueOf(clientID);
+			String message = String.valueOf(clientID) + "\n";
 			outToClient.writeBytes(message);
 			
 			// Do the work and the communication with the client here	

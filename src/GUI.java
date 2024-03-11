@@ -72,7 +72,10 @@ public class GUI extends Application {
 			Socket serverSocket = new Socket("localhost", 9999);
 			DataOutputStream outToServer = new DataOutputStream(serverSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+
+			System.out.println("Fag");
 			this.clientId = Integer.parseInt(inFromServer.readLine());
+			System.out.println("Ikke fag");
 
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
@@ -161,7 +164,7 @@ public class GUI extends Application {
             // Setting up standard players
 			
 			Player Rasmus = new Player("Rasmus",9,4,"up");
-			players.add(me);
+			players.add(Rasmus);
 			fields[9][4].setGraphic(new ImageView(hero_up));
 
 			Player Mikkel = new Player("Mikkel",14,15,"up");
@@ -171,9 +174,9 @@ public class GUI extends Application {
 			Player Anders = new Player("Anders",3,4,"up");
 			players.add(Anders);
 			fields[14][15].setGraphic(new ImageView(hero_up));
-
+			System.out.println(players);
 			me = players.get(clientId);
-
+			System.out.println(me);
 			scoreList.setText(getScoreList());
 		} catch(Exception e) {
 			e.printStackTrace();
