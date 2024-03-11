@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NetvaerkSpil.iml" filepath="$PROJECT_DIR$/NetvaerkSpil.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ServerSkeleton/ServerSkeleton.iml" filepath="$PROJECT_DIR$/ServerSkeleton/ServerSkeleton.iml" />
     </modules>
   </component>
 </project>

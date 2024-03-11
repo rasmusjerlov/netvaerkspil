@@ -66,11 +66,11 @@ public class GUI extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		try {
+
 			Socket serverSocket = new Socket("localhost", 9999);
 			DataOutputStream outToServer = new DataOutputStream(serverSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 
-			System.out.println(serverSocket.getInetAddress());
 
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
@@ -155,7 +155,7 @@ public class GUI extends Application {
 				default: break;
 				}
 			});
-			
+
             // Setting up standard players
 			
 			me = new Player("Orville",9,4,"up");
