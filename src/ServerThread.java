@@ -25,10 +25,11 @@ public class ServerThread extends Thread{
 
 			// Do the work and the communication with the client here
 			// The following two lines are only an example
-				String posMessage;
+			String[] pos = inFromClient.readLine().split("\\s++");
+			String posMessage;
 			while ((posMessage = Arrays.toString(inFromClient.readLine().split("\\s++"))) != null) {
+				outToClient.writeBytes(posMessage + "\n");
 				System.out.println(posMessage);
-
 			}
 		
 		} catch (IOException e) {
