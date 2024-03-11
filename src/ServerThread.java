@@ -3,6 +3,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class ServerThread extends Thread{
 	Socket connSocket;
@@ -18,14 +19,17 @@ public class ServerThread extends Thread{
 
 			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 			DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
-			String message = String.valueOf(clientID) + "\n";
-			outToClient.writeBytes(message);
-			
-			// Do the work and the communication with the client here	
-			// The following two lines are only an example
-			//while ((message = inFromClient.readLine()) != null) {
+			String idmessage = String.valueOf(clientID) + "\n";
+			outToClient.writeBytes(idmessage);
 
-			//}
+
+			// Do the work and the communication with the client here
+			// The following two lines are only an example
+				String posMessage;
+			while ((posMessage = Arrays.toString(inFromClient.readLine().split("\\s++"))) != null) {
+				System.out.println(posMessage);
+
+			}
 		
 		} catch (IOException e) {
 			e.printStackTrace();
