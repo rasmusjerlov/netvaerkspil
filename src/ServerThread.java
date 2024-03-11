@@ -21,8 +21,6 @@ public class ServerThread extends Thread{
 			while ((message = inFromClient.readLine()) != null) {
 
 			}
-
-			outToClient.writeBytes("ecco " + clientSentence + '\n' );
 		
 		} catch (IOException e) {
 			e.printStackTrace();
