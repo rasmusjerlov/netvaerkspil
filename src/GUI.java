@@ -127,7 +127,6 @@ public class GUI extends Application {
 				case UP:    playerMoved(0,-1,"up");
                     try {
                         outToServer.writeBytes("UP");
-						//System.out.println(inFromServer.readLine());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -135,7 +134,6 @@ public class GUI extends Application {
 				case DOWN:  playerMoved(0,+1,"down");
 					try {
 						outToServer.writeBytes("DOWN");
-						//System.out.println(inFromServer.readLine());
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
@@ -143,7 +141,6 @@ public class GUI extends Application {
 				case LEFT:  playerMoved(-1,0,"left");
 					try {
 						outToServer.writeBytes("LEFT");
-						//System.out.println(inFromServer.readLine());
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
@@ -151,7 +148,6 @@ public class GUI extends Application {
 				case RIGHT: playerMoved(+1,0,"right");
 					try {
 						outToServer.writeBytes("RIGHT");
-						//System.out.println(inFromServer.readLine());
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
