@@ -96,8 +96,8 @@ public class GUI extends Application {
 			hero_down   = new Image(getClass().getResourceAsStream("Image/heroDown.png"),size,size,false,false);
 
 			fields = new Label[20][20];
-			for (int j=0; j<20; j++) {
-				for (int i=0; i<20; i++) {
+			for (int j = 0; j < 20; j++) {
+				for (int i = 0; i < 20; i++) {
 					switch (board[j].charAt(i)) {
 					case 'w':
 						fields[i][j] = new Label("", new ImageView(image_wall));
@@ -178,22 +178,22 @@ public class GUI extends Application {
 
 	public void playerMoved(int delta_x, int delta_y, String direction) {
 		me.direction = direction;
-		int x = me.getXpos(),y = me.getYpos();
+		int x = me.getXpos(), y = me.getYpos();
 
-		if (board[y+delta_y].charAt(x+delta_x)=='w') {
+		if (board[y + delta_y].charAt(x + delta_x) == 'w') {
 			me.addPoints(-1);
 		} 
 		else {
-			Player p = getPlayerAt(x+delta_x,y+delta_y);
-			if (p!=null) {
+			Player p = getPlayerAt(x + delta_x, y + delta_y);
+			if (p != null) {
               me.addPoints(10);
               p.addPoints(-10);
 			} else {
 				me.addPoints(1);
 			
 				fields[x][y].setGraphic(new ImageView(image_floor));
-				x+=delta_x;
-				y+=delta_y;
+				x += delta_x;
+				y += delta_y;
 
 				if (direction.equals("right")) {
 					fields[x][y].setGraphic(new ImageView(hero_right));
