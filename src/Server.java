@@ -18,9 +18,10 @@ public class Server {
         // ----
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
-        String clientMessage;
-        while ((clientMessage = messageFromClient.readLine()) != null) {
+        String clientMessage = messageFromClient.readLine();
+        while (clientMessage != null) {
             System.out.println(clientMessage);
+            outToClient.writeBytes(clientMessage);
         }
 
     }

@@ -126,28 +126,28 @@ public class GUI extends Application {
 				switch (event.getCode()) {
 				case UP:    playerMoved(0,-1,"up");
                     try {
-                        outToServer.writeBytes("UP");
+                        outToServer.writeBytes("UP \n");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     break;
 				case DOWN:  playerMoved(0,+1,"down");
 					try {
-						outToServer.writeBytes("DOWN");
+						outToServer.writeBytes("DOWN \n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
 				case LEFT:  playerMoved(-1,0,"left");
 					try {
-						outToServer.writeBytes("LEFT");
+						outToServer.writeBytes("LEFT \n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
 				case RIGHT: playerMoved(+1,0,"right");
 					try {
-						outToServer.writeBytes("RIGHT");
+						outToServer.writeBytes("RIGHT \n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
