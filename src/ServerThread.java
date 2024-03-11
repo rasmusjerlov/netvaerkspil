@@ -17,7 +17,11 @@ public class ServerThread extends Thread{
 			
 			// Do the work and the communication with the client here	
 			// The following two lines are only an example
-			String clientSentence = inFromClient.readLine();
+			String message;
+			while ((message = inFromClient.readLine()) != null) {
+
+			}
+
 			outToClient.writeBytes("ecco " + clientSentence + '\n' );
 		
 		} catch (IOException e) {

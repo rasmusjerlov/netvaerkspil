@@ -10,7 +10,6 @@ public class Server {
 
         while (true) {
             System.out.println("Serveren venter på klient");
-
             Socket connectionSocket = serverSocket.accept();
             (new ServerThread(connectionSocket)).start();
             System.out.println("Klient forbundet til Server");
