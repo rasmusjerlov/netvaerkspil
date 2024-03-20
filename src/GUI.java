@@ -73,9 +73,9 @@ public class GUI extends Application {
 			DataOutputStream outToServer = new DataOutputStream(serverSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 
-			System.out.println("Fag");
 			this.clientId = Integer.parseInt(inFromServer.readLine());
-			System.out.println("Ikke fag");
+			ReadThread readThread = new ReadThread(inFromServer);
+			readThread.start();
 
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
@@ -84,12 +84,12 @@ public class GUI extends Application {
 
 			Text mazeLabel = new Text("Maze:");
 			mazeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-	
+
 			Text scoreLabel = new Text("Score:");
 			scoreLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
 			scoreList = new TextArea();
-			
+
 			GridPane boardGrid = new GridPane();
 
 			image_wall  = new Image(getClass().getResourceAsStream("Image/wall4.png"),size,size,false,false);
@@ -107,22 +107,22 @@ public class GUI extends Application {
 					case 'w':
 						fields[i][j] = new Label("", new ImageView(image_wall));
 						break;
-					case ' ':					
+					case ' ':
 						fields[i][j] = new Label("", new ImageView(image_floor));
 						break;
-					default: throw new Exception("Illegal field value: "+board[j].charAt(i) );
+					default: throw new Exception("Illegal field value: " + board[j].charAt(i) );
 					}
 					boardGrid.add(fields[i][j], i, j);
 				}
 			}
 			scoreList.setEditable(false);
-			
-			
-			grid.add(mazeLabel,  0, 0); 
-			grid.add(scoreLabel, 1, 0); 
+
+
+			grid.add(mazeLabel,  0, 0);
+			grid.add(scoreLabel, 1, 0);
 			grid.add(boardGrid,  0, 1);
 			grid.add(scoreList,  1, 1);
-						
+
 			Scene scene = new Scene(grid,scene_width,scene_height);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -162,7 +162,7 @@ public class GUI extends Application {
 			});
 
             // Setting up standard players
-			
+
 			Player Rasmus = new Player("Rasmus",9,4,"up");
 			players.add(Rasmus);
 			fields[9][4].setGraphic(new ImageView(hero_up));
@@ -181,6 +181,7 @@ public class GUI extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public void playerMoved(int delta_x, int delta_y, String direction) {
@@ -239,6 +240,27 @@ public class GUI extends Application {
 		}
 		return null;
 	}
+
+	class ReadThread extends Thread {
+    private BufferedReader reader;
+
+    public ReadThread(BufferedReader reader) {
+        this.reader = reader;
+    }
+
+    @Override
+    public void run() {
+        try {
+            String message;
+            while ((message = reader.readLine()) != null) {
+                // Process the message here
+                System.out.println("Received from server: " + message);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
 
 	
 }

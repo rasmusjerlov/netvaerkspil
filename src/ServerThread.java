@@ -28,8 +28,8 @@ public class ServerThread extends Thread{
 			String[] pos = inFromClient.readLine().split("\\s++");
 			String posMessage;
 			while ((posMessage = Arrays.toString(inFromClient.readLine().split("\\s++"))) != null) {
-				outToClient.writeBytes(posMessage + "\n");
-				System.out.println(posMessage);
+				outToClient.writeBytes(pos[0] + "\n");
+				System.out.println(posMessage); //Debug besked
 			}
 		
 		} catch (IOException e) {
