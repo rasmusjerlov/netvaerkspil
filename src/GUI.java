@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -185,42 +186,46 @@ public class GUI extends Application {
 	}
 
 	public void playerMoved(int delta_x, int delta_y, String direction) {
-		me.direction = direction;
-		int x = me.getXpos(), y = me.getYpos();
 
-		if (board[y + delta_y].charAt(x + delta_x) == 'w') {
-			me.addPoints(-1);
-		}
-		else {
-			Player p = getPlayerAt(x + delta_x, y + delta_y);
-			if (p != null) {
-              me.addPoints(10);
-              p.addPoints(-10);
+			me.direction = direction;
+			int x = me.getXpos(), y = me.getYpos();
+
+			if (board[y + delta_y].charAt(x + delta_x) == 'w') {
+				me.addPoints(-1);
 			} else {
-				me.addPoints(1);
+				Player p = getPlayerAt(x + delta_x, y + delta_y);
+				if (p != null) {
+					me.addPoints(10);
+					p.addPoints(-10);
+				} else {
+					me.addPoints(1);
 
-				fields[x][y].setGraphic(new ImageView(image_floor));
-				x += delta_x;
-				y += delta_y;
+					fields[x][y].setGraphic(new ImageView(image_floor));
+					x += delta_x;
+					y += delta_y;
 
-				if (direction.equals("right")) {
-					fields[x][y].setGraphic(new ImageView(hero_right));
-				};
-				if (direction.equals("left")) {
-					fields[x][y].setGraphic(new ImageView(hero_left));
-				};
-				if (direction.equals("up")) {
-					fields[x][y].setGraphic(new ImageView(hero_up));
-				};
-				if (direction.equals("down")) {
-					fields[x][y].setGraphic(new ImageView(hero_down));
-				};
+					if (direction.equals("right")) {
+						fields[x][y].setGraphic(new ImageView(hero_right));
+					}
+					;
+					if (direction.equals("left")) {
+						fields[x][y].setGraphic(new ImageView(hero_left));
+					}
+					;
+					if (direction.equals("up")) {
+						fields[x][y].setGraphic(new ImageView(hero_up));
+					}
+					;
+					if (direction.equals("down")) {
+						fields[x][y].setGraphic(new ImageView(hero_down));
+					}
+					;
 
-				me.setXpos(x);
-				me.setYpos(y);
+					me.setXpos(x);
+					me.setYpos(y);
+				}
 			}
-		}
-		scoreList.setText(getScoreList());
+			scoreList.setText(getScoreList());
 	}
 
 
@@ -253,11 +258,13 @@ public class GUI extends Application {
     @Override
     public void run() {
         try {
+			System.out.println("hej");
             BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 			String message;
             while ((message = reader.readLine()) != null) {
 				String[] pos = inFromClient.readLine().split("\\s++");
 				String direction = pos[3];
+				Platform.runLater(() -> {
 				int deltaY = 0;
 				int deltaX = 0;
 				if (direction.equals("down")) {
@@ -270,7 +277,7 @@ public class GUI extends Application {
 					deltaX++;
 				}
 				playerMoved(deltaX, deltaY, direction);
-
+				});
 				//players.get(Integer.parseInt(pos[0])).setXpos(Integer.parseInt(pos[1]));
 				//players.get(Integer.parseInt(pos[0])).setYpos(Integer.parseInt(pos[2]));
 
