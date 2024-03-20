@@ -25,7 +25,8 @@ public class ServerThread extends Thread{
 			String[] pos = inFromClient.readLine().split("\\s++");
 			String posMessage;
 			while ((posMessage = Arrays.toString(inFromClient.readLine().split("\\s++"))) != null) {
-				outToClient.writeBytes(posMessage + "\n");
+				//outToClient.writeBytes(posMessage + "\n");
+				Server.threadsForEach(posMessage);
 				System.out.println(posMessage); //Debug besked
 			}
 		
@@ -35,7 +36,12 @@ public class ServerThread extends Thread{
 	}
 
 	public void sendBesked(String besked) {
-
-
+		try {
+			DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
+			String message = besked;
+			outToClient.writeBytes(message + "\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
