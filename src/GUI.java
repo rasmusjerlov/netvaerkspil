@@ -131,28 +131,28 @@ public class GUI extends Application {
 				switch (event.getCode()) {
 				case UP:    playerMoved(0,-1,"up");
                     try {
-                        outToServer.writeBytes(me.name + " " + me.getXpos() + " " +  me.getYpos() + "\n");
+                        outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + "\n");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     break;
 				case DOWN:  playerMoved(0,+1,"down");
 					try {
-						outToServer.writeBytes(me.name + " " + me.getXpos() + " " +  me.getYpos() + "\n");
+						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
 				case LEFT:  playerMoved(-1,0,"left");
 					try {
-						outToServer.writeBytes(me.name + " " + me.getXpos() + " " +  me.getYpos() + "\n");
+						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
 				case RIGHT: playerMoved(+1,0,"right");
 					try {
-						outToServer.writeBytes(me.name + " " + me.getXpos() + " " +  me.getYpos() + "\n");
+						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
@@ -257,6 +257,8 @@ public class GUI extends Application {
 			String message;
             while ((message = reader.readLine()) != null) {
 				String[] pos = inFromClient.readLine().split("\\s++");
+				players.get(Integer.parseInt(pos[0])).setXpos(Integer.parseInt(pos[1]));
+				players.get(Integer.parseInt(pos[0])).setYpos(Integer.parseInt(pos[2]));
                 System.out.println("Received from server: " + message);
             }
         } catch (IOException e) {
