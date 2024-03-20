@@ -22,9 +22,8 @@ public class ServerThread extends Thread{
 			String idmessage = String.valueOf(clientID) + "\n";
 			outToClient.writeBytes(idmessage);
 
-			String[] pos = inFromClient.readLine().split("\\s++");
 			String posMessage;
-			while ((posMessage = Arrays.toString(inFromClient.readLine().split("\\s++"))) != null) {
+			while ((posMessage = inFromClient.readLine()) != null) {
 				//outToClient.writeBytes(posMessage + "\n");
 				Server.threadsForEach(posMessage);
 				System.out.println(posMessage); //Debug besked
