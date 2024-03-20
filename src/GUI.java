@@ -258,13 +258,21 @@ public class GUI extends Application {
             while ((message = reader.readLine()) != null) {
 				String[] pos = inFromClient.readLine().split("\\s++");
 				String direction = pos[3];
-				playerMoved(Integer.parseInt(pos[1]), Integer.parseInt(pos[2]), direction);
-				int x = players.get(Integer.parseInt(pos[0])).getXpos();
-				int y = players.get(Integer.parseInt(pos[0])).getYpos();
-				int xPos = Integer.parseInt(pos[1]);
-				int yPos = Integer.parseInt(pos[2]);
-				players.get(Integer.parseInt(pos[0])).setXpos(Integer.parseInt(pos[1]));
-				players.get(Integer.parseInt(pos[0])).setYpos(Integer.parseInt(pos[2]));
+				int deltaY = 0;
+				int deltaX = 0;
+				if (direction.equals("down")) {
+					deltaY++;
+				} else if (direction.equals("up")) {
+					deltaY--;
+				} else if (direction.equals("left")) {
+					deltaX--;
+				} else if (direction.equals("right")) {
+					deltaX++;
+				}
+				playerMoved(deltaX, deltaY, direction);
+
+				//players.get(Integer.parseInt(pos[0])).setXpos(Integer.parseInt(pos[1]));
+				//players.get(Integer.parseInt(pos[0])).setYpos(Integer.parseInt(pos[2]));
 
                 System.out.println("Received from server: " + message);
             }
