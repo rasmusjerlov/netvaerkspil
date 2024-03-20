@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javafx.application.Application;
@@ -32,6 +31,7 @@ public class GUI extends Application {
 
 	private Label[][] fields;
 	private TextArea scoreList;
+	
 	private  String[] board = {    // 20x20
 			"wwwwwwwwwwwwwwwwwwww",
 			"w        ww        w",
@@ -69,7 +69,7 @@ public class GUI extends Application {
 	public void start(Stage primaryStage) throws IOException {
 		try {
 
-			Socket serverSocket = new Socket("localhost", 9999);
+			Socket serverSocket = new Socket("10.10.138.75", 9999);
 			DataOutputStream outToServer = new DataOutputStream(serverSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 
@@ -253,11 +253,10 @@ public class GUI extends Application {
     @Override
     public void run() {
         try {
-			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
-            String message;
+            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
+			String message;
             while ((message = reader.readLine()) != null) {
 				String[] pos = inFromClient.readLine().split("\\s++");
-				System.out.println(Arrays.toString(pos));
                 System.out.println("Received from server: " + message);
             }
         } catch (IOException e) {
