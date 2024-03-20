@@ -266,15 +266,19 @@ public class GUI extends Application {
 				players.get(Integer.parseInt(pos[0])).setYpos(Integer.parseInt(pos[2]));
 				if (direction.equals("right")) {
 					fields[xPos][yPos].setGraphic(new ImageView(hero_right));
+					fields[xPos--][yPos].setGraphic(new ImageView(image_floor));
 				};
 				if (direction.equals("left")) {
 					fields[xPos][yPos].setGraphic(new ImageView(hero_left));
+					fields[xPos++][yPos].setGraphic(new ImageView(image_floor));
 				};
 				if (direction.equals("up")) {
 					fields[xPos][yPos].setGraphic(new ImageView(hero_up));
+					fields[xPos][yPos++].setGraphic(new ImageView(image_floor));
 				};
 				if (direction.equals("down")) {
 					fields[xPos][yPos].setGraphic(new ImageView(hero_down));
+					fields[xPos][yPos--].setGraphic(new ImageView(image_floor));
 				};
                 System.out.println("Received from server: " + message);
             }
