@@ -130,28 +130,28 @@ public class GUI extends Application {
 
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 				switch (event.getCode()) {
-				case UP:    playerMoved(0,-1,"up");
+				case UP:
                     try {
                         outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "up" + "\n");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     break;
-				case DOWN:  playerMoved(0,+1,"down");
+				case DOWN:
 					try {
 						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "down" + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
-				case LEFT:  playerMoved(-1,0,"left");
+				case LEFT:
 					try {
 						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "left" + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
-				case RIGHT: playerMoved(+1,0,"right");
+				case RIGHT:
 					try {
 						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "right" + "\n");
 					} catch (IOException e) {
