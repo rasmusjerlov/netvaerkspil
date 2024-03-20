@@ -261,9 +261,10 @@ public class GUI extends Application {
             BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 			String message;
             while (true) {
-				message = reader.readLine();
+				//message = inFromClient.readLine();
 				String[] pos = inFromClient.readLine().split("\\s++");
 				String direction = pos[3];
+				System.out.println(direction);
 				Platform.runLater(() -> {
 				int deltaY = 0;
 				int deltaX = 0;
@@ -281,7 +282,6 @@ public class GUI extends Application {
 				//players.get(Integer.parseInt(pos[0])).setXpos(Integer.parseInt(pos[1]));
 				//players.get(Integer.parseInt(pos[0])).setYpos(Integer.parseInt(pos[2]));
 
-                System.out.println("Received from server: " + message);
             }
         } catch (IOException e) {
             e.printStackTrace();
