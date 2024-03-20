@@ -23,7 +23,8 @@ public class ServerThread extends Thread{
         outToClient.writeBytes(idmessage);
 
         String posMessage;
-        while ((posMessage = inFromClient.readLine()) != null) {
+        while (true) {
+            posMessage = inFromClient.readLine();
             Server.threadsForEach(posMessage);
             System.out.println(posMessage); //Debug besked
         }
