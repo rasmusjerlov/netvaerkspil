@@ -32,9 +32,9 @@ public class Player {
 		this.direction = direction;
 	}
 	public void addPoints(int p) {
-		point+=p;
+		point += p;
 	}
 	public String toString() {
-		return name+":   "+point;
+		return name + ":   " + point;
 	}
 }

@@ -131,28 +131,28 @@ public class GUI extends Application {
 				switch (event.getCode()) {
 				case UP:    playerMoved(0,-1,"up");
                     try {
-                        outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + "\n");
+                        outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "up" + "\n");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     break;
 				case DOWN:  playerMoved(0,+1,"down");
 					try {
-						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + "\n");
+						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "down" + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
 				case LEFT:  playerMoved(-1,0,"left");
 					try {
-						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + "\n");
+						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "left" + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
 				case RIGHT: playerMoved(+1,0,"right");
 					try {
-						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + "\n");
+						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "right" + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
@@ -257,8 +257,25 @@ public class GUI extends Application {
 			String message;
             while ((message = reader.readLine()) != null) {
 				String[] pos = inFromClient.readLine().split("\\s++");
+				String direction = pos[3];
+				int x = players.get(Integer.parseInt(pos[0])).getXpos();
+				int y = players.get(Integer.parseInt(pos[0])).getYpos();
+				int xPos = Integer.parseInt(pos[1]);
+				int yPos = Integer.parseInt(pos[2]);
 				players.get(Integer.parseInt(pos[0])).setXpos(Integer.parseInt(pos[1]));
 				players.get(Integer.parseInt(pos[0])).setYpos(Integer.parseInt(pos[2]));
+				if (direction.equals("right")) {
+					fields[xPos][yPos].setGraphic(new ImageView(hero_right));
+				};
+				if (direction.equals("left")) {
+					fields[xPos][yPos].setGraphic(new ImageView(hero_left));
+				};
+				if (direction.equals("up")) {
+					fields[xPos][yPos].setGraphic(new ImageView(hero_up));
+				};
+				if (direction.equals("down")) {
+					fields[xPos][yPos].setGraphic(new ImageView(hero_down));
+				};
                 System.out.println("Received from server: " + message);
             }
         } catch (IOException e) {
