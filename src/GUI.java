@@ -275,7 +275,7 @@ public class GUI extends Application {
 				} else if (direction.equals("right")) {
 					deltaX++;
 				}
-				playerMoved(players, clientId, deltaX, deltaY, direction);
+				playerMoved(players, Integer.parseInt(pos[0]), deltaX, deltaY, direction);
 				});
 				//players.get(Integer.parseInt(pos[0])).setXpos(Integer.parseInt(pos[1]));
 				//players.get(Integer.parseInt(pos[0])).setYpos(Integer.parseInt(pos[2]));
