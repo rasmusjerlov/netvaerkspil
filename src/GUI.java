@@ -253,7 +253,7 @@ public class GUI extends Application {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-                // Process the message here
+
                 System.out.println("Received from server: " + message);
             }
         } catch (IOException e) {

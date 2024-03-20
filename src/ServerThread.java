@@ -22,18 +22,20 @@ public class ServerThread extends Thread{
 			String idmessage = String.valueOf(clientID) + "\n";
 			outToClient.writeBytes(idmessage);
 
-
-			// Do the work and the communication with the client here
-			// The following two lines are only an example
 			String[] pos = inFromClient.readLine().split("\\s++");
 			String posMessage;
 			while ((posMessage = Arrays.toString(inFromClient.readLine().split("\\s++"))) != null) {
-				outToClient.writeBytes(pos[0] + "\n");
+				outToClient.writeBytes(posMessage + "\n");
 				System.out.println(posMessage); //Debug besked
 			}
 		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void sendBesked(String besked) {
+
+
 	}
 }
