@@ -258,28 +258,14 @@ public class GUI extends Application {
             while ((message = reader.readLine()) != null) {
 				String[] pos = inFromClient.readLine().split("\\s++");
 				String direction = pos[3];
+				playerMoved(Integer.parseInt(pos[1]), Integer.parseInt(pos[2]), direction);
 				int x = players.get(Integer.parseInt(pos[0])).getXpos();
 				int y = players.get(Integer.parseInt(pos[0])).getYpos();
 				int xPos = Integer.parseInt(pos[1]);
 				int yPos = Integer.parseInt(pos[2]);
 				players.get(Integer.parseInt(pos[0])).setXpos(Integer.parseInt(pos[1]));
 				players.get(Integer.parseInt(pos[0])).setYpos(Integer.parseInt(pos[2]));
-				if (direction.equals("right")) {
-					fields[xPos][yPos].setGraphic(new ImageView(hero_right));
-					fields[xPos--][yPos].setGraphic(new ImageView(image_floor));
-				};
-				if (direction.equals("left")) {
-					fields[xPos][yPos].setGraphic(new ImageView(hero_left));
-					fields[xPos++][yPos].setGraphic(new ImageView(image_floor));
-				};
-				if (direction.equals("up")) {
-					fields[xPos][yPos].setGraphic(new ImageView(hero_up));
-					fields[xPos][yPos++].setGraphic(new ImageView(image_floor));
-				};
-				if (direction.equals("down")) {
-					fields[xPos][yPos].setGraphic(new ImageView(hero_down));
-					fields[xPos][yPos--].setGraphic(new ImageView(image_floor));
-				};
+
                 System.out.println("Received from server: " + message);
             }
         } catch (IOException e) {
