@@ -260,7 +260,8 @@ public class GUI extends Application {
         try {
             BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 			String message;
-            while ((message = reader.readLine()) != null) {
+            while (true) {
+				message = reader.readLine();
 				String[] pos = inFromClient.readLine().split("\\s++");
 				String direction = pos[3];
 				Platform.runLater(() -> {
