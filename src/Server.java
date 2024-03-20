@@ -32,4 +32,11 @@ public class Server {
 //        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
     }
+    public ServerThread threadsForEach () {
+        for (ServerThread thread : serverThreads) {
+            thread.sendBesked();
+        }
+        return null;
+    }
+
 }
