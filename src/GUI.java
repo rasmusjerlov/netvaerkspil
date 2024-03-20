@@ -27,7 +27,7 @@ public class GUI extends Application {
 	public static Image image_wall;
 	public static Image hero_right,hero_left,hero_up,hero_down;
 
-	public static Player me;
+	public static Player s;
 	public static List<Player> players = new ArrayList<Player>();
 
 	private Label[][] fields;
@@ -132,28 +132,28 @@ public class GUI extends Application {
 				switch (event.getCode()) {
 				case UP:
                     try {
-                        outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "up" + "\n");
+                        outToServer.writeBytes(clientId + " " + s.getXpos() + " " +  s.getYpos() + " " + "up" + "\n");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     break;
 				case DOWN:
 					try {
-						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "down" + "\n");
+						outToServer.writeBytes(clientId + " " + s.getXpos() + " " +  s.getYpos() + " " + "down" + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
 				case LEFT:
 					try {
-						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "left" + "\n");
+						outToServer.writeBytes(clientId + " " + s.getXpos() + " " +  s.getYpos() + " " + "left" + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
 				case RIGHT:
 					try {
-						outToServer.writeBytes(clientId + " " + me.getXpos() + " " +  me.getYpos() + " " + "right" + "\n");
+						outToServer.writeBytes(clientId + " " + s.getXpos() + " " +  s.getYpos() + " " + "right" + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
@@ -176,8 +176,8 @@ public class GUI extends Application {
 			players.add(Anders);
 			fields[14][15].setGraphic(new ImageView(hero_up));
 			System.out.println(players);
-			me = players.get(clientId);
-			System.out.println(me);
+			s = players.get(clientId);
+			System.out.println(s);
 			scoreList.setText(getScoreList());
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -185,20 +185,20 @@ public class GUI extends Application {
 
 	}
 
-	public void playerMoved(int delta_x, int delta_y, String direction) {
-
-			me.direction = direction;
-			int x = me.getXpos(), y = me.getYpos();
+	public void playerMoved(List<Player> players, int id, int delta_x, int delta_y, String direction) {
+			Player s = players.get(id);
+			s.direction = direction;
+			int x = s.getXpos(), y = s.getYpos();
 
 			if (board[y + delta_y].charAt(x + delta_x) == 'w') {
-				me.addPoints(-1);
+				s.addPoints(-1);
 			} else {
 				Player p = getPlayerAt(x + delta_x, y + delta_y);
 				if (p != null) {
-					me.addPoints(10);
+					s.addPoints(10);
 					p.addPoints(-10);
 				} else {
-					me.addPoints(1);
+					s.addPoints(1);
 
 					fields[x][y].setGraphic(new ImageView(image_floor));
 					x += delta_x;
@@ -221,8 +221,8 @@ public class GUI extends Application {
 					}
 					;
 
-					me.setXpos(x);
-					me.setYpos(y);
+					s.setXpos(x);
+					s.setYpos(y);
 				}
 			}
 			scoreList.setText(getScoreList());
@@ -258,7 +258,6 @@ public class GUI extends Application {
     @Override
     public void run() {
         try {
-			System.out.println("hej");
             BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 			String message;
             while ((message = reader.readLine()) != null) {
@@ -276,7 +275,7 @@ public class GUI extends Application {
 				} else if (direction.equals("right")) {
 					deltaX++;
 				}
-				playerMoved(deltaX, deltaY, direction);
+				playerMoved(players, clientId, deltaX, deltaY, direction);
 				});
 				//players.get(Integer.parseInt(pos[0])).setXpos(Integer.parseInt(pos[1]));
 				//players.get(Integer.parseInt(pos[0])).setYpos(Integer.parseInt(pos[2]));
