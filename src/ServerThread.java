@@ -3,6 +3,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Arrays;
 
 public class ServerThread extends Thread{
@@ -15,24 +16,28 @@ public class ServerThread extends Thread{
 
 	}
 	public void run() {
-		try {
+    try {
+        BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
+        DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
+        String idmessage = String.valueOf(clientID) + "\n";
+        outToClient.writeBytes(idmessage);
 
-			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
-			DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
-			String idmessage = String.valueOf(clientID) + "\n";
-			outToClient.writeBytes(idmessage);
-
-			String posMessage;
-			while ((posMessage = inFromClient.readLine()) != null) {
-				//outToClient.writeBytes(posMessage + "\n");
-				Server.threadsForEach(posMessage);
-				System.out.println(posMessage); //Debug besked
-			}
-		
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+        String posMessage;
+        while ((posMessage = inFromClient.readLine()) != null) {
+            Server.threadsForEach(posMessage);
+            System.out.println(posMessage); //Debug besked
+        }
+    } catch (SocketException e) {
+        System.out.println("Client disconnected: " + e.getMessage());
+        try {
+            connSocket.close();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
 	public void sendBesked(String besked) {
 		try {
