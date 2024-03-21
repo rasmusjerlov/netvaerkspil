@@ -59,7 +59,6 @@ public class GUI extends Application {
     };
 
     private String spillerNavn;
-    private List<int[]> availablePositions;
 
 
     // -------------------------------------------
@@ -121,15 +120,6 @@ public class GUI extends Application {
                 }
             }
             scoreList.setEditable(false);
-
-            availablePositions = new ArrayList<>();
-            for (int j = 0; j < 20; j++) {
-                for (int i = 0; i < 20; i++) {
-                    if (board[j].charAt(i) == ' ') {
-                        availablePositions.add(new int[]{i, j});
-                    }
-                }
-            }
 
 
             grid.add(mazeLabel, 0, 0);
@@ -200,11 +190,11 @@ public class GUI extends Application {
 //				}
 //			}
 
-            Player Rasmus = new Player("Rasmus", 9, 4, "up");
-            players.add(Rasmus);
-            fields[9][4].setGraphic(new ImageView(hero_up));
+            Player s1 = new Player(navn, 10, 4, "up");
+            players.add(s1);
+            fields[10][4].setGraphic(new ImageView(hero_up));
 
-            s = Rasmus;
+            s = s1;
 
 
             System.out.println(players);
