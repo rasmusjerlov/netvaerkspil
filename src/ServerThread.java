@@ -5,22 +5,20 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class ServerThread extends Thread{
 	Socket connSocket;
-	private int clientID;
 	
-	public ServerThread(Socket connSocket, int clientID) {
+	public ServerThread(Socket connSocket) {
 		this.connSocket = connSocket;
-		this.clientID = clientID;
 
 	}
 	public void run() {
     try {
+
         BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
         DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
-        String idmessage = String.valueOf(clientID) + "\n";
-        outToClient.writeBytes(idmessage);
 
         String posMessage;
         while (true) {

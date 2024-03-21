@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Server {
 
-    private static int clientIdCounter = 0;
     public static ArrayList<ServerThread> serverThreads = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
@@ -17,10 +16,9 @@ public class Server {
         while (true) {
             System.out.println("Serveren venter på klient");
             Socket connectionSocket = serverSocket.accept();
-            ServerThread st = new ServerThread(connectionSocket, clientIdCounter);
+            ServerThread st = new ServerThread(connectionSocket);
             serverThreads.add(st);
             st.start();
-            clientIdCounter++;
             System.out.println("Klient forbundet til Server");
 
         }
