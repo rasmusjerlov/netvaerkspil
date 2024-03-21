@@ -132,28 +132,28 @@ public class GUI extends Application {
 				switch (event.getCode()) {
 				case UP:
                     try {
-                        outToServer.writeBytes(clientId + " " + s.getXpos() + " " +  s.getYpos() + " " + "up" + "\n");
+                        outToServer.writeBytes(s.getName() + " " + s.getXpos() + " " +  s.getYpos() + " " + "up" + "\n");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     break;
 				case DOWN:
 					try {
-						outToServer.writeBytes(clientId + " " + s.getXpos() + " " +  s.getYpos() + " " + "down" + "\n");
+						outToServer.writeBytes(s.getName() + " " + s.getXpos() + " " +  s.getYpos() + " " + "down" + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
 				case LEFT:
 					try {
-						outToServer.writeBytes(clientId + " " + s.getXpos() + " " +  s.getYpos() + " " + "left" + "\n");
+						outToServer.writeBytes(s.getName() + " " + s.getXpos() + " " +  s.getYpos() + " " + "left" + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
 					break;
 				case RIGHT:
 					try {
-						outToServer.writeBytes(clientId + " " + s.getXpos() + " " +  s.getYpos() + " " + "right" + "\n");
+						outToServer.writeBytes(s.getName() + " " + s.getXpos() + " " +  s.getYpos() + " " + "right" + "\n");
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
@@ -175,6 +175,7 @@ public class GUI extends Application {
 			Player Anders = new Player("Anders",3,4,"up");
 			players.add(Anders);
 			fields[14][15].setGraphic(new ImageView(hero_up));
+
 			System.out.println(players);
 			s = players.get(clientId);
 			System.out.println(s);
