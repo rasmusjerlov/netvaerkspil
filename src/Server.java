@@ -32,7 +32,7 @@ public class Server {
 //        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
     }
-    public static void threadsForEach (String besked) {
+    public synchronized static void threadsForEach (String besked) {
         for (ServerThread thread : serverThreads) {
             thread.sendBesked(besked);
         }
