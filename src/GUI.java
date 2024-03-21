@@ -70,7 +70,7 @@ public class GUI extends Application {
 	public void start(Stage primaryStage) throws IOException {
 		try {
 
-			Socket serverSocket = new Socket("10.10.138.75", 9999);
+			Socket serverSocket = new Socket("10.10.138.2", 9999);
 			DataOutputStream outToServer = new DataOutputStream(serverSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 

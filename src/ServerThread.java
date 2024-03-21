@@ -40,7 +40,7 @@ public class ServerThread extends Thread{
     }
 }
 
-	public void sendBesked(String besked) {
+	public synchronized void sendBesked(String besked) {
 		try {
 			DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
 			String message = besked;
