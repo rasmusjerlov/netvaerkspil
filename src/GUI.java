@@ -29,8 +29,8 @@ public class GUI extends Application {
     public static Image image_wall;
     public static Image hero_right, hero_left, hero_up, hero_down;
 
-    public static Player s;
-    public static List<Player> players = new ArrayList<Player>();
+    public Player s;
+    public List<Player> players = new ArrayList<Player>();
 
     private Label[][] fields;
     private TextArea scoreList;
@@ -287,21 +287,30 @@ public class GUI extends Application {
                 BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
                 while (true) {
                     String[] pos = inFromClient.readLine().split("\\s++");
+                    Platform.runLater(() -> {
                     String playerName = pos[0];
                     int newX = Integer.parseInt(pos[1]);
                     int newY = Integer.parseInt(pos[2]);
                     String direction = pos[3];
 
                     Player player = getPlayerByName(playerName);
+                    System.out.println(player.getName());
                     if (player == null) {
                         // Opretter ny spiller
                         player = new Player(playerName, newX, newY, direction);
                         players.add(player);
                     }
-
-                    int deltaX = newX - player.getXpos();
-                    int deltaY = newY - player.getYpos();
-                    Platform.runLater(() -> {
+                        int deltaY = 0;
+                        int deltaX = 0;
+                        if (direction.equals("down")) {
+                            deltaY++;
+                        } else if (direction.equals("up")) {
+                            deltaY--;
+                        } else if (direction.equals("left")) {
+                            deltaX--;
+                        } else if (direction.equals("right")) {
+                            deltaX++;
+                        }
                         playerMoved(playerName, deltaX, deltaY, direction);
                     });
                 }
