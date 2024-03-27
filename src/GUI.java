@@ -58,7 +58,6 @@ public class GUI extends Application {
             "wwwwwwwwwwwwwwwwwwww"
     };
 
-    private String spillerNavn;
 
 
     // -------------------------------------------
@@ -170,25 +169,6 @@ public class GUI extends Application {
 
             System.out.println("Indtast dit navn: ");
             String navn = scanner.nextLine();
-            this.spillerNavn = navn;
-
-            //Player sp = new Player(this.spillerNavn, 9, 4,"up");
-
-
-//			for (Player p : players) {
-//				if (p.getName() == this.spillerNavn) {
-//					s = p;
-//				} else {
-//					Random random = new Random();
-//					int randomIndex = random.nextInt(availablePositions.size());
-//					int[] position = availablePositions.remove(randomIndex);
-//					Player sp = new Player(this.spillerNavn, position[0], position[1],"up");
-//					players.add(sp);
-//					Platform.runLater(() -> {
-//						fields[position[0]][position[1]].setGraphic(new ImageView(hero_up));
-//					});
-//				}
-//			}
 
             Player s1 = new Player(navn, 10, 4, "up");
             players.add(s1);
@@ -282,42 +262,44 @@ public class GUI extends Application {
         }
 
         @Override
-        public void run() {
-            try {
-                BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
-                while (true) {
-                    String[] pos = inFromClient.readLine().split("\\s++");
-                    Platform.runLater(() -> {
-                    String playerName = pos[0];
-                    int newX = Integer.parseInt(pos[1]);
-                    int newY = Integer.parseInt(pos[2]);
-                    String direction = pos[3];
+public void run() {
+    try {
+        BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
+        while (true) {
+            String[] pos = inFromClient.readLine().split("\\s++");
+            String playerName = pos[0];
+            int newX = Integer.parseInt(pos[1]);
+            int newY = Integer.parseInt(pos[2]);
+            String direction = pos[3];
 
-                    Player player = getPlayerByName(playerName);
-                    System.out.println(player.getName());
-                    if (player == null) {
-                        // Opretter ny spiller
-                        player = new Player(playerName, newX, newY, direction);
-                        players.add(player);
-                    }
-                        int deltaY = 0;
-                        int deltaX = 0;
-                        if (direction.equals("down")) {
-                            deltaY++;
-                        } else if (direction.equals("up")) {
-                            deltaY--;
-                        } else if (direction.equals("left")) {
-                            deltaX--;
-                        } else if (direction.equals("right")) {
-                            deltaX++;
-                        }
-                        playerMoved(playerName, deltaX, deltaY, direction);
-                    });
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            Player player = getPlayerByName(playerName);
+            if (player == null) {
+                // this is a new player
+                player = new Player(playerName, newX, newY, direction);
+                players.add(player);
+            } else {
+                System.out.println(player.getName());
             }
+
+            Platform.runLater(() -> {
+                int deltaY = 0;
+                int deltaX = 0;
+                if (direction.equals("down")) {
+                    deltaY++;
+                } else if (direction.equals("up")) {
+                    deltaY--;
+                } else if (direction.equals("left")) {
+                    deltaX--;
+                } else if (direction.equals("right")) {
+                    deltaX++;
+                }
+                playerMoved(playerName, deltaX, deltaY, direction);
+            });
         }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
         private Player getPlayerByName(String name) {
             for (Player player : players) {
