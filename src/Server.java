@@ -36,4 +36,10 @@ public class Server {
         }
     }
 
+    public synchronized static void addPlayer(Player newPlayer) {
+        for (ServerThread thread : serverThreads) {
+            thread.sendBesked("new player " + newPlayer.getName());
+        }
+    }
+
 }
