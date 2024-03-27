@@ -29,8 +29,8 @@ public class GUI extends Application {
     public static Image image_wall;
     public static Image hero_right, hero_left, hero_up, hero_down;
 
-    public Player s;
-    public List<Player> players = new ArrayList<Player>();
+    public static Player s;
+    public static List<Player> players = new ArrayList<Player>();
 
     private Label[][] fields;
     private TextArea scoreList;
