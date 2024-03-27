@@ -15,23 +15,16 @@ public class ServerThread extends Thread {
 
     }
 
-    // ServerThread.java
     public void run() {
         try {
+
             BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
             DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
 
             String posMessage;
             while (true) {
                 posMessage = inFromClient.readLine();
-                if (posMessage.startsWith("new player joined")) {
-                    String[] parts = posMessage.split(" ");
-                    String playerName = parts[3];
-                    Player newPlayer = new Player(playerName, 0, 0, "up");
-                    Server.addPlayer(newPlayer);
-                } else {
-                    Server.threadsForEach(posMessage);
-                }
+                Server.threadsForEach(posMessage);
                 System.out.println(posMessage); //Debug besked
             }
         } catch (SocketException e) {
@@ -45,6 +38,7 @@ public class ServerThread extends Thread {
             e.printStackTrace();
         }
     }
+
 
     public void sendBesked(String besked) {
         try {

@@ -287,40 +287,55 @@ public class GUI extends Application {
                 BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
                 String message;
                 while (true) {
+
+                    //message = inFromClient.readLine();
                     String[] pos = inFromClient.readLine().split("\\s++");
-                    if (pos[0].equals("new player")) {
-                        String playerName = pos[1];
-                        Player newPlayer = new Player(playerName, 0, 0, "up"); // assuming initial position and direction
-                        players.add(newPlayer);
-                        Platform.runLater(() -> {
-                            fields[0][0].setGraphic(new ImageView(hero_up)); // assuming initial position
-                        });
-                    } else {
-                        // existing player moved
-                        Platform.runLater(() -> {
-                            String playerName = pos[0];
-                            int newX = Integer.parseInt(pos[1]);
-                            int newY = Integer.parseInt(pos[2]);
-                            String direction = pos[3];
-                            for (Player player : players) {
-                                if (player.getName().equals(playerName)) {
-                                    int delta_x = newX - player.getXpos();
-                                    int delta_y = newY - player.getYpos();
-                                    // update player's position on the GUI
-                                    playerMoved(playerName, delta_x, delta_y, direction);
-                                    break;
+                    String direction = pos[3];
+                    for (Player s : players) {
+                        if (!s.getName().equals(pos[0])) {
+                            Player p = new Player(pos[0], Integer.parseInt(pos[1]), Integer.parseInt(pos[2]), direction);
+                            players.add(p);
+                            System.out.println(direction);
+                            Platform.runLater(() -> {
+                                int deltaY = 0;
+                                int deltaX = 0;
+                                if (direction.equals("down")) {
+                                    deltaY++;
+                                } else if (direction.equals("up")) {
+                                    deltaY--;
+                                } else if (direction.equals("left")) {
+                                    deltaX--;
+                                } else if (direction.equals("right")) {
+                                    deltaX++;
                                 }
-                            }
-                        });
+                                playerMoved(p.getName(), deltaX, deltaY, direction);
+                            });
+                        } else {
+                            System.out.println(direction);
+                            Platform.runLater(() -> {
+                                int deltaY = 0;
+                                int deltaX = 0;
+                                if (direction.equals("down")) {
+                                    deltaY++;
+                                } else if (direction.equals("up")) {
+                                    deltaY--;
+                                } else if (direction.equals("left")) {
+                                    deltaX--;
+                                } else if (direction.equals("right")) {
+                                    deltaX++;
+                                }
+                                playerMoved(s.getName(), deltaX, deltaY, direction);
+                            });
+
+                        }
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-
     }
+
 }
 
 
