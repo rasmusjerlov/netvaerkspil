@@ -285,57 +285,41 @@ public class GUI extends Application {
         public void run() {
             try {
                 BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
-                String message;
                 while (true) {
-
-                    //message = inFromClient.readLine();
                     String[] pos = inFromClient.readLine().split("\\s++");
+                    String playerName = pos[0];
+                    int newX = Integer.parseInt(pos[1]);
+                    int newY = Integer.parseInt(pos[2]);
                     String direction = pos[3];
-                    for (Player s : players) {
-                        if (!s.getName().equals(pos[0])) {
-                            Player p = new Player(pos[0], Integer.parseInt(pos[1]), Integer.parseInt(pos[2]), direction);
-                            players.add(p);
-                            System.out.println(direction);
-                            Platform.runLater(() -> {
-                                int deltaY = 0;
-                                int deltaX = 0;
-                                if (direction.equals("down")) {
-                                    deltaY++;
-                                } else if (direction.equals("up")) {
-                                    deltaY--;
-                                } else if (direction.equals("left")) {
-                                    deltaX--;
-                                } else if (direction.equals("right")) {
-                                    deltaX++;
-                                }
-                                playerMoved(p.getName(), deltaX, deltaY, direction);
-                            });
-                        } else {
-                            System.out.println(direction);
-                            Platform.runLater(() -> {
-                                int deltaY = 0;
-                                int deltaX = 0;
-                                if (direction.equals("down")) {
-                                    deltaY++;
-                                } else if (direction.equals("up")) {
-                                    deltaY--;
-                                } else if (direction.equals("left")) {
-                                    deltaX--;
-                                } else if (direction.equals("right")) {
-                                    deltaX++;
-                                }
-                                playerMoved(s.getName(), deltaX, deltaY, direction);
-                            });
 
-                        }
+                    Player player = getPlayerByName(playerName);
+                    if (player == null) {
+                        // Opretter ny spiller
+                        player = new Player(playerName, newX, newY, direction);
+                        players.add(player);
                     }
+
+                    int deltaX = newX - player.getXpos();
+                    int deltaY = newY - player.getYpos();
+                    Platform.runLater(() -> {
+                        playerMoved(playerName, deltaX, deltaY, direction);
+                    });
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
 
+        private Player getPlayerByName(String name) {
+            for (Player player : players) {
+                if (player.getName().equals(name)) {
+                    return player;
+                }
+            }
+            return null;
+        }
+
+    }
 }
 
 
