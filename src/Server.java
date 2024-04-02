@@ -16,23 +16,16 @@ public class Server {
         while (true) {
             System.out.println("Serveren venter på klient");
             Socket connectionSocket = serverSocket.accept();
-            ServerThread st = new ServerThread(connectionSocket);
-            serverThreads.add(st);
+            ServerThread st = new ServerThread(connectionSocket); // Opretter ny servertråd ved ny forbindelse
+            serverThreads.add(st); //Tilføjer servertråden til en liste til senere gennemløb
             st.start();
             System.out.println("Klient forbundet til Server");
 
         }
-        // connection stuff
-//        BufferedReader messageFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-//        DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-//        System.out.println("Klient forbundet til Server");
-        // ----
-//        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-
     }
     public synchronized static void threadsForEach (String besked) {
-        for (ServerThread thread : serverThreads) {
-            thread.sendBesked(besked);
+        for (ServerThread thread : serverThreads) { //Sender en besked fra en servertråd ud til de andre servertråde
+            thread.sendBesked(besked); //Metode som sender besked fra tråd til klient
         }
     }
 

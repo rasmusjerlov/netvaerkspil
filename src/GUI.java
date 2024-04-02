@@ -70,12 +70,13 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
+            // Opretter forbindelse til server
             Scanner scanner = new Scanner(System.in);
             Socket serverSocket = new Socket("localhost", 9999);
             DataOutputStream outToServer = new DataOutputStream(serverSocket.getOutputStream());
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 
-
+            //Starter read tråd
             ReadThread readThread = new ReadThread(inFromServer, serverSocket);
             readThread.start();
 
@@ -134,7 +135,7 @@ public class GUI extends Application {
                 switch (event.getCode()) {
                     case UP:
                         try {
-                            outToServer.writeBytes(s.getName() + " " + s.getXpos() + " " + s.getYpos() + " " + "up" + "\n");
+                            outToServer.writeBytes(s.getName() + " " + s.getXpos() + " " + s.getYpos() + " " + "up" + "\n"); // Sender beskeder til server
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -167,14 +168,14 @@ public class GUI extends Application {
 
             // Setting up standard players
 
-            System.out.println("Indtast dit navn: ");
+            System.out.println("Indtast dit navn: "); // Opretter spiller med det indtastede navn.
             String navn = scanner.nextLine();
 
             Player s1 = new Player(navn, 10, 4, "up");
             players.add(s1);
             fields[10][4].setGraphic(new ImageView(hero_up));
 
-            s = s1;
+            s = s1; // Spilleren man styrer er s, ville være nemmere hvis det var p
 
 
             System.out.println(players);
@@ -187,7 +188,7 @@ public class GUI extends Application {
     }
 
     public void playerMoved(String navn, int delta_x, int delta_y, String direction) {
-        for (Player s : players) {
+        for (Player s : players) { // Løber spiller listen igennem for at finde spiller med matchende navn
             if (s.getName().equals(navn)) {
                 s.direction = direction;
                 int x = s.getXpos(), y = s.getYpos();
@@ -272,13 +273,12 @@ public void run() {
             int newY = Integer.parseInt(pos[2]);
             String direction = pos[3];
 
-            Player player = getPlayerByName(playerName);
-            if (player == null) {
-                // this is a new player
+            Player player = getPlayerByName(playerName); // Tjekker om en spiller er i listen og returnerer den. Se metoden
+            if (player == null) { // Hvis spiller ikke findes, oprettes en ny.
                 player = new Player(playerName, newX, newY, direction);
                 players.add(player);
             } else {
-                System.out.println(player.getName());
+                //System.out.println(player.getName()); // Debug for at se om det rigtige objekt vælges
             }
 
             Platform.runLater(() -> {
@@ -301,7 +301,7 @@ public void run() {
     }
 }
 
-        private Player getPlayerByName(String name) {
+        private Player getPlayerByName(String name) { // Metode for sig selv, da vi fik fejl da vi kørte noget lign. i run metoden
             for (Player player : players) {
                 if (player.getName().equals(name)) {
                     return player;

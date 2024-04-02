@@ -24,8 +24,8 @@ public class ServerThread extends Thread {
             String posMessage;
             while (true) {
                 posMessage = inFromClient.readLine();
-                Server.threadsForEach(posMessage);
-                System.out.println(posMessage); //Debug besked
+                Server.threadsForEach(posMessage); //Sender besked til andre servertråde
+                //System.out.println(posMessage); //Debug besked
             }
         } catch (SocketException e) {
             System.out.println("Client disconnected: " + e.getMessage());
@@ -39,7 +39,7 @@ public class ServerThread extends Thread {
         }
     }
 
-
+    //Metode der sender en besked til klienten
     public void sendBesked(String besked) {
         try {
             DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
